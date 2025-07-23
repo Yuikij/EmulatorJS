@@ -951,6 +951,7 @@ class EmulatorJS {
             await this.downloadStartState();
             await this.downloadGameParent();
             await this.downloadGamePatch();
+            this.setupDosboxConfig();
             this.startGame();
         })();
     }
@@ -1001,6 +1002,34 @@ class EmulatorJS {
             console.warn(e);
             this.startGameError(this.localization("Failed to start game"));
         });
+    }
+    setupDosboxConfig() {
+        // 处理dosbox_pure_conf配置参数
+        if (this.debug) {
+            console.log("setupDosboxConfig called");
+            console.log("Current core:", this.getCore());
+            console.log("dosboxPureConf value:", this.config.dosboxPureConf);
+            console.log("dosboxPureConf type:", typeof this.config.dosboxPureConf);
+        }
+        
+        if (this.getCore() === "dosbox_pure" && typeof this.config.dosboxPureConf === "string") {
+            // 将 dosbox_pure_conf 添加到默认核心选项中，而不是作为变量设置
+            if (!this.config.defaultOptions) {
+                this.config.defaultOptions = {};
+            }
+            this.config.defaultOptions["dosbox_pure_conf"] = this.config.dosboxPureConf;
+            if (this.debug) console.log("DOSBox Pure conf set as core option:", this.config.dosboxPureConf);
+        } else {
+            if (this.debug) {
+                console.log("DOSBox config setup skipped");
+                if (this.getCore() !== "dosbox_pure") {
+                    console.log("Reason: Core is not dosbox_pure");
+                }
+                if (typeof this.config.dosboxPureConf !== "string") {
+                    console.log("Reason: dosboxPureConf is not a string");
+                }
+            }
+        }
     }
     startGame() {
         try {

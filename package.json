@@ -14,13 +14,14 @@
         "url": "https://github.com/EmulatorJS/EmulatorJS/issues"
     },
     "scripts": {
-        "start": "http-server",
+        "start": "node server.js",
         "minify": "node minify/minify.js",
         "build": "node build.js",
         "update": "node update.js"
     },
     "dependencies": {
         "@node-minify/clean-css": "^9.0.1",
+        "express": "^4.21.2",
         "@node-minify/core": "^9.0.2",
         "@node-minify/terser": "^9.0.1",
         "http-server": "^14.1.1",

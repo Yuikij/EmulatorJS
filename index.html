@@ -204,7 +204,8 @@
                             "Commodore 128": "vice_x128",
                             "Commodore VIC20": "vice_xvic",
                             "Commodore Plus/4": "vice_xplus4",
-                            "Commodore PET": "vice_xpet"
+                            "Commodore PET": "vice_xpet",
+                            "DOS": "dos"
                         }
 
                         const cores = Object.keys(coreValues).sort().reduce(
@@ -260,6 +261,11 @@
                 window.EJS_threads = enableThreads;
                 if (browserMode) {
                     window.EJS_browserMode = browserMode;
+                }
+                
+                // 为DOS核心设置dosbox_pure_conf参数
+                if (core === "dos") {
+                    window.dosbox_pure_conf = "inside"; // 可选值: "inside", "outside", "embed"
                 }
 
                 script.src = "data/loader.js";
